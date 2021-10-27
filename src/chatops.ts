@@ -1,7 +1,13 @@
-import {
+import type {
   UrlLink,
-  Message,
   Room,
+  Message,
+}             from 'wechaty'
+
+// import { Message, UrlLink } from "wechaty/dist/esm/src/mods/mod-impl";
+
+import {
+  impl,
 }             from 'wechaty'
 
 import { DelayQueueExecutor } from 'rx-queue'
@@ -97,14 +103,14 @@ export class Chatops {
       await Promise.all(
         roomList.map(room => room.say(info)),
       )
-    } else if (info instanceof Message) {
+    } else if (info instanceof impl.Message) {
       switch (info.type()) {
-        case Message.Type.Text:
+        case impl.Message.Type.Text:
           await Promise.all(
             roomList.map(room => room.say(`${info}`)),
           )
           break
-        case Message.Type.Image:
+        case impl.Message.Type.Image:
           {
             const image = await info.toFileBox()
             await Promise.all(
@@ -112,7 +118,7 @@ export class Chatops {
             )
           }
           break
-        case Message.Type.Url:
+        case impl.Message.Type.Url:
           {
             const urlLink = await info.toUrlLink()
             await Promise.all(
@@ -122,14 +128,14 @@ export class Chatops {
           break
         default:
           {
-            const typeName = Message.Type[info.type()]
+            const typeName = impl.Message.Type[info.type()]
             await Promise.all(
               roomList.map(room => room.say(`message type: ${typeName}`))
             )
           }
           break
       }
-    } else if (info instanceof UrlLink) {
+    } else if (info instanceof impl.UrlLink) {
       await Promise.all(
         roomList.map(room => room.say(info))
       )

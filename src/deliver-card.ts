@@ -1,9 +1,10 @@
 import {
   log,
-  UrlLinkPayload,
-  UrlLink,
   Room,
+  impl,
+  payload,
 }                     from 'wechaty'
+
 import request from 'request'
 
 import {
@@ -22,7 +23,7 @@ import { Chatops }  from './chatops.js'
 async function deliverCard (
   owner          : string,
   repository     : string,
-  urlLinkPayload : UrlLinkPayload,
+  urlLinkPayload : payload.UrlLink,
 ): Promise<void> {
   const len = urlLinkPayload.description!.length
 
@@ -32,7 +33,7 @@ async function deliverCard (
 
   log.verbose('issue-handlers', 'manageIssue(%s, %s, %s)', owner, repository, JSON.stringify(urlLinkPayload))
 
-  const urlLink = new UrlLink(urlLinkPayload)
+  const urlLink = new impl.UrlLink(urlLinkPayload)
   await Chatops.instance().queue(
     async () => {
       await Chatops.instance().say(urlLinkPayload.url)

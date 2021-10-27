@@ -2,6 +2,7 @@ import {
   log,
   Message,
   Wechaty,
+  impl,
 }             from 'wechaty'
 
 import moment from 'moment'
@@ -125,7 +126,7 @@ async function dingDong (
     console.info('mentionText', text)
   }
 
-  if (type === Message.Type.Text) {
+  if (type === impl.Message.Type.Text) {
     if (text.match(/^#ding$/i)) {
       await message.say('dong')
     }

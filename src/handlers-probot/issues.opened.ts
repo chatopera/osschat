@@ -2,7 +2,7 @@ import type {
   Probot,
 }             from 'probot'
 import {
-  UrlLinkPayload,
+  payload,
   log,
 }                 from 'wechaty'
 
@@ -30,7 +30,7 @@ const issuesOpenedPlugin = (app: Probot) => app.on('issues.opened', async (conte
     thumbnailUrl,
     title,
     url,
-  } as UrlLinkPayload
+  } as payload.UrlLink
 
   try {
     await deliverCard(
