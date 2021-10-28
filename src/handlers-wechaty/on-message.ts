@@ -1,7 +1,11 @@
+import type{
+  Message,
+}             from 'wechaty'
+
 import {
   log,
-  Message,
   Wechaty,
+  type,
   impl,
 }             from 'wechaty'
 
@@ -111,7 +115,7 @@ async function dingDong (
   log.info('on-message', 'dingDong()')
 
   let text = message.text()
-  const type = message.type()
+  const msgType = message.type()
   const room = message.room()
   // const from = message.talker()
   const mentionSelf = await message.mentionSelf()
@@ -123,10 +127,10 @@ async function dingDong (
 
     log.info('on-message', 'dingDong() message in room and mentioned self')
     text = await message.mentionText()
-    console.info('mentionText', text)
+    console.info('mentionText', msgType)
   }
 
-  if (type === impl.Message.Type.Text) {
+  if (msgType === type.Message.Text) {
     if (text.match(/^#ding$/i)) {
       await message.say('dong')
     }

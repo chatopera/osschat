@@ -7,6 +7,7 @@ import type {
 // import { Message, UrlLink } from "wechaty/dist/esm/src/mods/mod-impl";
 
 import {
+  type,
   impl,
 }             from 'wechaty'
 
@@ -105,12 +106,12 @@ export class Chatops {
       )
     } else if (info instanceof impl.Message) {
       switch (info.type()) {
-        case impl.Message.Type.Text:
+        case type.Message.Text:
           await Promise.all(
             roomList.map(room => room.say(`${info}`)),
           )
           break
-        case impl.Message.Type.Image:
+        case type.Message.Image:
           {
             const image = await info.toFileBox()
             await Promise.all(
@@ -118,7 +119,7 @@ export class Chatops {
             )
           }
           break
-        case impl.Message.Type.Url:
+        case type.Message.Url:
           {
             const urlLink = await info.toUrlLink()
             await Promise.all(
@@ -128,7 +129,7 @@ export class Chatops {
           break
         default:
           {
-            const typeName = impl.Message.Type[info.type()]
+            const typeName = type.Message[info.type()]
             await Promise.all(
               roomList.map(room => room.say(`message type: ${typeName}`))
             )
